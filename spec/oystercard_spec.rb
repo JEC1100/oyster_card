@@ -9,7 +9,6 @@ describe Oystercard do
     end
 
 
-
 describe '#top_up' do
 let(:bal) { subject.bal }
 
@@ -24,7 +23,14 @@ let(:bal) { subject.bal }
         subject.top_up(maximum_balance)
         expect { subject.top_up(1) }.to raise_error "Your balance is already: £#{bal}. This transaction would take over the £#{maximum_balance} limit."
     end
-
 end
+    describe '#deduct' do
+        it 'Card responds to deduct' do
+            expect(subject).to respond_to(:deduct).with(1).argument
+        end
+        it 'Deducts the fayre from card balance' do
+            expect{ subject.deduct(1) }.to change{ subject.bal }.by(-1)
+        end
+    end
 
 end

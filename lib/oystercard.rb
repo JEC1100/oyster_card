@@ -12,4 +12,8 @@ MAXIMUM_BALANCE = 90
         @bal += amt
     end
 
+    def deduct(amt)
+        @bal -= amt
+    end
+
 end
