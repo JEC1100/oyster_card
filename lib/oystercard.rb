@@ -5,6 +5,7 @@ MAXIMUM_BALANCE = 90
 
     def initialize
         @bal = 0
+        @card_status = false
     end
 
     def top_up(amt)
@@ -14,6 +15,14 @@ MAXIMUM_BALANCE = 90
 
     def deduct(amt)
         @bal -= amt
+    end
+
+    def in_journey?
+        @card_status
+    end
+
+    def touch_in
+        @card_status = true
     end
 
 end

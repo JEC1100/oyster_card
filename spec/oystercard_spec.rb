@@ -33,4 +33,25 @@ end
         end
     end
 
+    describe '#in_journey' do
+        it 'Is initially not in_journey' do
+            expect(subject).not_to be_in_journey
+        end
+    end
+
+    describe '#touch_in' do
+        it 'Touches card in' do
+            subject.touch_in
+            expect(subject).to be_in_journey
+        end
+    end
+
+    describe '#touch_out' do
+        it 'Touches card out' do
+        expect(subject).not_to be_in_journey
+        end
+    end
+
+
+
 end
