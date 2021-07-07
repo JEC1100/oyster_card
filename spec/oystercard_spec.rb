@@ -25,10 +25,10 @@ let(:bal) { subject.bal }
     end
 end
     describe '#deduct' do
-        it 'Card responds to deduct' do
+        xit 'Card responds to deduct' do
             expect(subject).to respond_to(:deduct).with(1).argument
         end
-        it 'Deducts the fayre from card balance' do
+        xit 'Deducts the fayre from card balance' do
             expect{ subject.deduct(1) }.to change{ subject.bal }.by(-1)
         end
     end
@@ -41,6 +41,7 @@ end
 
     describe '#touch_in' do
         it 'Touches card in' do
+            subject.top_up(10)
             subject.touch_in
             expect(subject).to be_in_journey
         end
@@ -51,6 +52,27 @@ end
         expect(subject).not_to be_in_journey
         end
     end
+
+    describe '#touch_out' do
+    it 'Touches card out' do
+        subject.top_up(10)
+        subject.touch_in
+        subject.touch_out
+        expect(subject.in_journey?).to eq(false)
+    end
+    it "Check that amt is deducted on touch_out" do
+        subject.top_up(10)
+        subject.touch_in
+        expect { subject.touch_out }.to change{ subject.bal }.by(-1)
+    end
+end
+
+    describe 'Prevent journey on empty card' do
+        it 'Raises error if attempting to touch in when limit less than MINIMUM BALANCE' do
+            expect { subject.touch_in }.to raise_error "Balance must be #{Oystercard::MINIMUM_BALANCE} or above to touch_in"
+        end
+    end
+
 
 
 
