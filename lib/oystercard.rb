@@ -1,12 +1,13 @@
 class Oystercard
 
-attr_reader :bal, :entry_station
+attr_reader :bal, :entry_station, :history_journey
 MAXIMUM_BALANCE = 90
 MINIMUM_BALANCE = 1
 
     def initialize
         @bal = 0
         @in_journey = false
+        @history_journey = []
     end
 
     def top_up(amt)

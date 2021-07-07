@@ -8,6 +8,10 @@ describe Oystercard do
         expect(subject.bal).to eq(0)
     end
 
+    it "Adds empty history_journey" do 
+        expect(subject.history_journey).to eq []
+    end
+
 
 describe '#top_up' do
 let(:bal) { subject.bal }
@@ -62,6 +66,10 @@ end
         subject.touch_out
         expect(subject.in_journey?).to eq(false)
     end
+
+    # it do
+    
+    # end
     
     it "Check that amt is deducted on touch_out" do
         subject.top_up(10)
@@ -92,6 +100,8 @@ end
             expect(subject.entry_station).to eq station
         end
     end
+
+    
             
 
 end
