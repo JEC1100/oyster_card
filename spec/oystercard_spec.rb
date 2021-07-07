@@ -40,9 +40,10 @@ end
     end
 
     describe '#touch_in' do
+    let(:station){ double :station }
         it 'Touches card in' do
             subject.top_up(10)
-            subject.touch_in
+            subject.touch_in(station)
             expect(subject).to be_in_journey
         end
     end
@@ -54,26 +55,43 @@ end
     end
 
     describe '#touch_out' do
+    let(:station){ double :station }
     it 'Touches card out' do
         subject.top_up(10)
-        subject.touch_in
+        subject.touch_in(station)
         subject.touch_out
         expect(subject.in_journey?).to eq(false)
     end
+    
     it "Check that amt is deducted on touch_out" do
         subject.top_up(10)
-        subject.touch_in
+        subject.touch_in(station)
         expect { subject.touch_out }.to change{ subject.bal }.by(-1)
+    end
+    
+    it "Check if entry_station = nil on touch_out" do
+        subject.top_up(10)
+        subject.touch_in(station)
+        subject.touch_out
+        expect(subject.entry_station).to eq(nil)
     end
 end
 
     describe 'Prevent journey on empty card' do
+        let(:station){ double :station }
         it 'Raises error if attempting to touch in when limit less than MINIMUM BALANCE' do
-            expect { subject.touch_in }.to raise_error "Balance must be #{Oystercard::MINIMUM_BALANCE} or above to touch_in"
+            expect { subject.touch_in(station) }.to raise_error "Balance must be #{Oystercard::MINIMUM_BALANCE} or above to touch_in"
         end
     end
 
-
-
+    describe "save entry station" do 
+        let(:station){ double :station }
+        it "saves entry station" do
+            subject.top_up(10)
+            subject.touch_in(station)
+            expect(subject.entry_station).to eq station
+        end
+    end
+            
 
 end
